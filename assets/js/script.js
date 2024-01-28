@@ -1,52 +1,54 @@
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
-var timeElement = document.getElementById('currentDay');
-
-function updateTime() {
-  var currentDate = dayjs().format("MMM DD, YYYY [at] hh:mm:ss");
-  timeElement.textContent = currentDate;
-}
-setInterval(updateTime, 1000);
 
 $(document).ready(function() {
 
-    $(".saveBtn").on("click", function() {
+    var timeElement = document.getElementById('currentDay');
+
+    function updateTime() {
+    var currentDate = dayjs().format("MMM DD, YYYY [at] hh:mm:ss");
+    timeElement.textContent = currentDate;
+    }
+    setInterval(updateTime, 1000);
+
+
+  $(".saveBtn").on("click", function() {
     // Get nearby values of the description in JQuery
-    var text = $(this).siblings(".description").val();
+    
     var time = $(this).parent().attr("id");
+    var text = $(this).siblings(".description").val();
 
     localStorage.setItem(time, text);
     })
 
-    function timeTracker() {
+    function timeCheck() {
     
-      var timeNow = dayjs().hour();
-      console.log(timeNow);
+      var timeNow = parseInt(dayjs().hour());
+      
         $(".time-block").each(function() {
           var timeBlock = parseInt($(this).attr("id"));
-          console.log(timeBlock);
+          console.log(timeBlock, timeNow);
 
-            if (timeBlock > timeNow) {
+            if (timeBlock < timeNow) {
               $(this).addClass("past");
               $(this).removeClass("present");
               $(this).removeClass("future");
             }
-
             else if (timeBlock === timeNow) {
               $(this).removeClass("past");
               $(this).addClass("present");
               $(this).removeClass("future");
-                           
-            }
-            else (timeBlock < timeNow); {
+            } 
+            else if (timeBlock > timeNow) {
               $(this).removeClass("past");
               $(this).removeClass("present");
-              $(this).addClass("future");              
-            }
+              $(this).addClass("future");
+            }              
         })
     }
-    timeTracker();
+    
+    timeCheck();
 
     function getFromLocalStorage() {
       $("#9 .description").val(localStorage.getItem("9"));
@@ -58,9 +60,9 @@ $(document).ready(function() {
       $("#15 .description").val(localStorage.getItem("15"));
       $("#16 .description").val(localStorage.getItem("16"));
       $("#17 .description").val(localStorage.getItem("17"));
-            // localStorage.getItem(time, text)
     }
     getFromLocalStorage();
+
 })
 
 
