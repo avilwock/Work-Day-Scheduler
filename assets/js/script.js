@@ -1,18 +1,21 @@
-// Wrap all code that interacts with the DOM in a call to jQuery to ensure that
-// the code isn't run until the browser has finished rendering all the elements
-// in the html.
-
+/*This wraps the code in a call to JQuery to ensure the code isn't run until the
+browser has finished rendering all of the HTML elements*/
 $(document).ready(function() {
-
+    //creates a variable for the time element by retrieving the id currentDay from
+    //the HTML
     var timeElement = document.getElementById('currentDay');
-
+    //This function is used to update the time
     function updateTime() {
+    //this creates the current day variable, and gets the current month, day, year,
+    //hours, minute, and second using dayjs
     var currentDate = dayjs().format("MMM DD, YYYY [at] hh:mm:ss");
+    //This updates the text content of the HTML current day element with the current date
     timeElement.textContent = currentDate;
     }
+    //This sets up an interval to repeat every 1 second to update the display time and date
     setInterval(updateTime, 1000);
 
-
+  // This 
   $(".saveBtn").on("click", function() {
     // Get nearby values of the description in JQuery
     
